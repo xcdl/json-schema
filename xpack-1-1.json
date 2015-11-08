@@ -1,0 +1,181 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "id": "http://xcdl.github.io/schemas/xpack-1-1.json",
+    "title": "xpack",
+    "description": "xPack schema definitions",
+    "definitions": {
+        "person": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string",
+                    "format": "email"
+                },
+                "url": {
+                    "type": "string",
+                    "format": "uri"
+                }
+            },
+            "required": [ "name" ],
+            "additionalProperties": false
+        }
+    },
+    "type": "object",
+    "properties": {
+        "name": {
+            "description": "Package name, in XCDL node name format.",
+            "type": "string"
+        },
+        "parent": {
+            "description": "Package parent node, in path format.",
+            "type": "string"
+        },
+        "description": {
+            "description": "A reasonably long string to explain the reason for having the package.",
+            "type": "string"
+        },
+        "activeIf": {
+            "description": "A JavaScript logical expression.",
+            "type": "string"
+        },
+        "repository": {
+            "description":"The current repository URL.",
+            "type": "object",
+            "properties": {
+                "type": {
+                    "description": "The repository type; currently only 'git' is supported.",
+                    "type": "string",
+                    "enum": [ "git" ]
+                },
+                "url": {
+                    "description": "The repository full URL.",
+                    "type": "string",
+                    "format": "uri"
+                }
+                "required": [ "type", "url" ],
+                "additionalProperties": false
+            }
+        },
+        "releases": {
+            "description": "An array of releases.",
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "version": {
+                        "description": "A semver compliant version number.",
+                        "type": "string"
+                    },
+                    "description": {
+                        "description": "A reasonably long string to explain the main changes in the release.",
+                        "type": "string",
+                    },
+                    "archives": {
+                        "description": "An array of URLs where the binary package can be downloaded from.",
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "format": "uri"
+                        },
+                        "minItems": 1
+                    },
+                    "repository": {
+                        "description": "An repository URLs where the source package can be downloaded from",
+                        "type": "object",
+                        "properties": {
+                            "description": "If missing, the main repository type is used.",
+                            "type": {
+                                "type": "string",
+                                "enum": [ "git" ]
+                            },
+                            "url": {
+                                "description": "If missing, the main repository URL is used.",
+                                "type": "string"
+                            },
+                            "tag": {
+                                "description": "A repository tag or commit id, to identify the release.",
+                                "type": "string"
+                            },
+                        },
+                        "required": [ "tag" ],
+                        "additionalProperties": false
+                    },
+                    "required": [ "version", "archives", "reposiotry" ],
+                    "additionalProperties": false
+                }
+            },
+            "minItems": 1,
+        },
+        "keywords": {
+            "description": "An array of string to help finding the package.",
+            "type": "array",
+            "items": {
+                "type": "string"
+            },
+            "minItems": 0
+        },
+        "homepage": {
+            "description": "The full URL of the package web page; may be the GitHub project page, if no other home page (like GitHub Pages) is available.",
+            "type": "string",
+            "format": "uri"
+        },
+        "bugs": {
+            "description": "An array of URLs where bugs/new features can be reported.",
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "url": {
+                        "description": "Tracker URL for manually entering tickets.",
+                        "type": "string",
+                        "format": "uri"
+                    },
+                    "required": [ "url" ],
+                    "additionalProperties": false
+                }
+            },
+            "minItems": 1
+        },
+        "license": {
+            "description": "A string with an SPDX license expression syntax version 2.0.",
+            "type": "string"
+        },
+        "maintainers": {
+            "description": "An ordered array of persons who maintain this package; the top person created the package.",
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/person"
+            },
+            "minItems": 1
+        },
+        "contributors": {
+            "description": "An ordered array of persons who contributed to the package content; the top person created the original content.",
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/person"
+            },
+            "minItems": 1
+        }
+        "dependencies": {
+            "description": "An array of strings with names & versions. The syntax is similar to the one used by NPM.",
+            "type": "array",
+            "items": {
+                "type": "string"
+            },
+            "minItems": 0
+        }
+    },
+    "required": [
+        "name",
+        "parent",
+        "repository",
+        "releases",
+        "license",
+        "maintainers",
+        "contributors",
+        "dependencies"
+    ]
+}
