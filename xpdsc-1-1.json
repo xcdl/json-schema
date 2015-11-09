@@ -43,7 +43,8 @@
 
 				"id": 
 				{
-					"type": "number"
+					"type": "integer",
+					"minimum": 0
 				}
 			}
 		},
@@ -340,12 +341,12 @@
 
 					"__dp": 
 					{
-						"type": "number"
+						"$ref": "#/definitions/unsignedIntType"
 					},
 
 					"__ap": 
 					{
-						"type": "number"
+						"$ref": "#/definitions/unsignedIntType"
 					},
 
 					"svd": 
