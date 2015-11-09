@@ -1,1 +1,3 @@
-_site_local/
+_site
+_site_local
+.DS_Store

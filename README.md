@@ -1,6 +1,6 @@
 # XCDL Schemas
 
-This project, available from [GitHub](http://github.com/xcdl/schemas), publishes at [GitHub Pages](http://xcdl.github.io/schemas/) a set of schemas used for configuration file validation.
+This project, available from [GitHub](http://github.com/xcdl/schemas), publishes at [GitHub Pages](http://xcdl.github.io/schemas/) a set of schemas used to validate the XCDL configuration files.
 
 Currently the following JSON schemas are available:
 
