@@ -1,72 +1,87 @@
 {
 	"$schema": "http://json-schema.org/draft-04/schema#",
 	"id": "http://xcdl.github.io/schemas/xpack-1-1.json",
-	"title": "xpack",
-	"description": "xPack schema definitions",
+	"title": "xpack schema",
+	"description": "xPack JSON schema definitions.",
 	"definitions": 
 	{
 		"person": 
 		{
 			"type": "object",
+			"additionalProperties": false,
 			"properties": 
 			{
 				"name": 
 				{
-					"type": "string"
+					"type": "string",
+					"minLength": 1
 				},
 
 				"email": 
 				{
 					"type": "string",
+					"minLength": 1,
 					"format": "email"
 				},
 
 				"url": 
 				{
 					"type": "string",
+					"minLength": 1,
 					"format": "uri"
 				}
 			},
 
 			"required": [
 				"name"
-			],
-
-			"additionalProperties": false
+			]
 		}
 	},
 
 	"type": "object",
+	"additionalProperties": false,
 	"properties": 
 	{
+		"$schema": 
+		{
+			"type": "string",
+			"minLength": 1,
+			"format": "uri"
+		},
+
 		"name": 
 		{
 			"description": "Package name, in XCDL node name format.",
-			"type": "string"
+			"type": "string",
+			"minLength": 1
 		},
 
 		"parent": 
 		{
 			"description": "Package parent node, in path format.",
-			"type": "string"
+			"type": "string",
+			"minLength": 1
 		},
 
 		"description": 
 		{
 			"description": "A reasonably long string to explain the reason for having the package.",
-			"type": "string"
+			"type": "string",
+			"minLength": 1
 		},
 
 		"activeIf": 
 		{
 			"description": "A JavaScript logical expression.",
-			"type": "string"
+			"type": "string",
+			"minLength": 1
 		},
 
 		"repository": 
 		{
 			"description": "The current repository URL.",
 			"type": "object",
+			"additionalProperties": false,
 			"properties": 
 			{
 				"type": 
@@ -82,46 +97,53 @@
 				{
 					"description": "The repository full URL.",
 					"type": "string",
+					"minLength": 1,
 					"format": "uri"
-				},
+				}
+			},
 
-				"required": [
-					"type",
-					"url"
-				],
-
-				"additionalProperties": false
-			}
+			"required": [
+				"type",
+				"url"
+			]
 		},
 
 		"releases": 
 		{
 			"description": "An array of releases.",
 			"type": "array",
+			"uniqueItems": true,
+			"additionalItems": false,
 			"items": 
 			{
 				"type": "object",
+				"additionalProperties": false,
 				"properties": 
 				{
 					"version": 
 					{
 						"description": "A semver compliant version number.",
-						"type": "string"
+						"type": "string",
+						"minLength": 1
 					},
 
 					"description": 
 					{
 						"description": "A reasonably long string to explain the main changes in the release.",
-						"type": "string"
+						"type": "string",
+						"minLength": 1
 					},
 
 					"archives": 
 					{
 						"description": "An array of URLs where the binary package can be downloaded from.",
 						"type": "array",
+						"uniqueItems": true,
+						"additionalItems": false,
 						"items": 
 						{
 							"type": "string",
+							"minLength": 1,
 							"format": "uri"
 						},
 
@@ -132,11 +154,12 @@
 					{
 						"description": "An repository URLs where the source package can be downloaded from",
 						"type": "object",
+						"additionalProperties": false,
 						"properties": 
 						{
-							"description": "If missing, the main repository type is used.",
 							"type": 
 							{
+								"description": "If missing, the main repository type is used.",
 								"type": "string",
 								"enum": [
 									"git"
@@ -146,31 +169,29 @@
 							"url": 
 							{
 								"description": "If missing, the main repository URL is used.",
-								"type": "string"
+								"type": "string",
+								"minLength": 1
 							},
 
 							"tag": 
 							{
 								"description": "A repository tag or commit id, to identify the release.",
-								"type": "string"
+								"type": "string",
+								"minLength": 1
 							}
 						},
 
 						"required": [
 							"tag"
-						],
+						]
+					}
+				},
 
-						"additionalProperties": false
-					},
-
-					"required": [
-						"version",
-						"archives",
-						"reposiotry"
-					],
-
-					"additionalProperties": false
-				}
+				"required": [
+					"version",
+					"archives",
+					"repository"
+				]
 			},
 
 			"minItems": 1
@@ -180,6 +201,8 @@
 		{
 			"description": "An array of string to help finding the package.",
 			"type": "array",
+			"uniqueItems": true,
+			"additionalItems": false,
 			"items": 
 			{
 				"type": "string"
@@ -192,6 +215,7 @@
 		{
 			"description": "The full URL of the package web page; may be the GitHub project page, if no other home page (like GitHub Pages) is available.",
 			"type": "string",
+			"minLength": 1,
 			"format": "uri"
 		},
 
@@ -199,24 +223,26 @@
 		{
 			"description": "An array of URLs where bugs/new features can be reported.",
 			"type": "array",
+			"uniqueItems": true,
+			"additionalItems": false,
 			"items": 
 			{
 				"type": "object",
+				"additionalProperties": false,
 				"properties": 
 				{
 					"url": 
 					{
 						"description": "Tracker URL for manually entering tickets.",
 						"type": "string",
+						"minLength": 1,
 						"format": "uri"
-					},
+					}
+				},
 
-					"required": [
-						"url"
-					],
-
-					"additionalProperties": false
-				}
+				"required": [
+					"url"
+				]
 			},
 
 			"minItems": 1
@@ -232,6 +258,8 @@
 		{
 			"description": "An ordered array of persons who maintain this package; the top person created the package.",
 			"type": "array",
+			"uniqueItems": true,
+			"additionalItems": false,
 			"items": 
 			{
 				"$ref": "#/definitions/person"
@@ -243,6 +271,8 @@
 		"contributors": 
 		{
 			"description": "An ordered array of persons who contributed to the package content; the top person created the original content.",
+			"uniqueItems": true,
+			"additionalItems": false,
 			"type": "array",
 			"items": 
 			{
@@ -255,6 +285,8 @@
 		"dependencies": 
 		{
 			"description": "An array of strings with names & versions. The syntax is similar to the one used by NPM.",
+			"uniqueItems": true,
+			"additionalItems": false,
 			"type": "array",
 			"items": 
 			{
