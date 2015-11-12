@@ -298,6 +298,7 @@
 	},
 
 	"required": [
+		"$schema",
 		"name",
 		"parent",
 		"repository",

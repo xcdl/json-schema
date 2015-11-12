@@ -1,0 +1,275 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"id": "http://xcdl.github.io/schemas/xcdl-1-1.json",
+	"title": "xcdl schema",
+	"description": "XCDL JSON schema definitions.",
+	"definitions": 
+	{
+		"$schema": 
+		{
+			"type": "string",
+			"minLength": 1,
+			"format": "uri"
+		},
+
+		"name": 
+		{
+			"description": "A string with the XCDL node name.",
+			"type": "string",
+			"minLength": 1
+		},
+
+		"type": 
+		{
+			"description": "A string with the XCDL node type.",
+			"type": "string",
+			"minLength": 1
+		},
+
+		"parent": 
+		{
+			"description": "A string with the parent node, in path format.",
+			"type": "string",
+			"minLength": 1
+		},
+
+		"description": 
+		{
+			"description": "A reasonably long string to explain what this node does.",
+			"type": "string",
+			"minLength": 1
+		},
+
+		"activeIf": 
+		{
+			"description": "A string with a JavaScript logical expression to decide when the node is active.",
+			"type": "string",
+			"minLength": 1
+		},
+
+		"currentFolder": 
+		{
+			"description": "Settings refering to the current folder.",
+			"type": "object",
+			"additionalProperties": false,
+			"properties": 
+			{
+				"isIncludeFolder": 
+				{
+					"type": "boolean"
+				},
+
+				"isSourceFolder": 
+				{
+					"type": "boolean"
+				}
+			}
+		},
+
+		"nodes": 
+		{
+			"description": "An array of other nodes.",
+			"type": "array",
+			"minItems": 1,
+			"uniqueItems": true,
+			"additionalItems": false,
+			"items": 
+			{
+				"$ref": "#/definitions/node"
+			}
+		},
+
+		"node": 
+		{
+			"description": "One of the nodes (file, component).",
+			"anyOf": [
+				{
+					"$ref": "#/definitions/fileNode"
+				},
+
+				{
+					"$ref": "#/definitions/componentNode"
+				}
+			]
+		},
+
+		"baseNode": 
+		{
+			"description": "Schema v4 does not allow to inherit from it, so just copy/paste to derived nodes.",
+			"type": "object",
+			"additionalProperties": false,
+			"properties": 
+			{
+				"name": 
+				{
+					"$ref": "#/definitions/name"
+				},
+
+				"type": 
+				{
+					"description": "A string with the XCDL node type.",
+					"type": "string",
+					"enum": [
+						"TYPE"
+					]
+				},
+
+				"parent": 
+				{
+					"$ref": "#/definitions/parent"
+				},
+
+				"description": 
+				{
+					"$ref": "#/definitions/description"
+				},
+
+				"activeIf": 
+				{
+					"$ref": "#/definitions/activeIf"
+				},
+
+				"nodes": 
+				{
+					"$ref": "#/definitions/nodes"
+				}
+			},
+
+			"required": [
+				"name",
+				"type",
+				"description"
+			]
+		},
+
+		"fileNode": 
+		{
+			"description": "A 'file' node.",
+			"type": "object",
+			"additionalProperties": false,
+			"properties": 
+			{
+				"name": 
+				{
+					"$ref": "#/definitions/name"
+				},
+
+				"type": 
+				{
+					"description": "A string with the XCDL node type.",
+					"type": "string",
+					"enum": [
+						"file"
+					]
+				},
+
+				"subType": 
+				{
+					"description": "A string with the XCDL node sub-type.",
+					"type": "string",
+					"enum": [
+						"header",
+						"sourceS",
+						"sourceC",
+						"sourceCpp"
+					]
+				},
+
+				"parent": 
+				{
+					"$ref": "#/definitions/parent"
+				},
+
+				"description": 
+				{
+					"$ref": "#/definitions/description"
+				},
+
+				"activeIf": 
+				{
+					"$ref": "#/definitions/activeIf"
+				},
+
+				"nodes": 
+				{
+					"$ref": "#/definitions/nodes"
+				}
+			},
+
+			"required": [
+				"name",
+				"type",
+				"subType"
+			]
+		},
+
+		"componentNode": 
+		{
+			"description": "A 'component' node.",
+			"type": "object",
+			"additionalProperties": false,
+			"properties": 
+			{
+				"name": 
+				{
+					"$ref": "#/definitions/name"
+				},
+
+				"type": 
+				{
+					"description": "A string with the XCDL node type.",
+					"type": "string",
+					"enum": [
+						"component"
+					]
+				},
+
+				"parent": 
+				{
+					"$ref": "#/definitions/parent"
+				},
+
+				"description": 
+				{
+					"$ref": "#/definitions/description"
+				},
+
+				"activeIf": 
+				{
+					"$ref": "#/definitions/activeIf"
+				},
+
+				"nodes": 
+				{
+					"$ref": "#/definitions/nodes"
+				}
+			},
+
+			"required": [
+				"name",
+				"type",
+				"description"
+			]
+		}
+	},
+
+	"type": "object",
+	"additionalProperties": false,
+	"properties": 
+	{
+		"$schema": 
+		{
+			"$ref": "#/definitions/$schema"
+		},
+
+		"currentFolder": 
+		{
+			"$ref": "#/definitions/currentFolder"
+		},
+
+		"nodes": 
+		{
+			"$ref": "#/definitions/nodes"
+		}
+	}
+}
