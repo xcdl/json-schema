@@ -1,11 +1,12 @@
 # XCDL Schemas
 
-This project, available from [GitHub](http://github.com/xcdl/schemas), publishes at [GitHub Pages](http://xcdl.github.io/schemas/) a set of schemas used to validate the XCDL configuration files.
+This project, hosted on [GitHub](http://github.com/xcdl/schemas), publishes on [GitHub Pages](http://xcdl.github.io/schemas) a set of schemas to be used by the XCDL configuration files validators.
 
 Currently the following JSON schemas are available:
 
-* [xpack](http://xcdl.github.io/schemas/xpack-1-1.json)
-* [xpdsc](http://xcdl.github.io/schemas/xpdsc-1-1.json)
+* [xpack v1.1](http://xcdl.github.io/schemas/xpack-1-1.json)
+* [xcdl v1.1](http://xcdl.github.io/schemas/xcdl-1-1.json) (work in progress)
+* [xpdsc v1.1](http://xcdl.github.io/schemas/xpdsc-1-1.json)
 
 Other schema resources:
 
