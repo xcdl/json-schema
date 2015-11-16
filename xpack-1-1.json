@@ -134,6 +134,14 @@
 						"minLength": 1
 					},
 
+					"date": 
+					{
+						"description": "The release date.",
+						"type": "string",
+						"minLength": 1,
+						"format": "date"
+					},
+
 					"archives": 
 					{
 						"description": "An array of URLs where the binary package can be downloaded from.",
@@ -231,18 +239,28 @@
 				"additionalProperties": false,
 				"properties": 
 				{
+					"description": 
+					{
+						"description": "String to characterise the tracker.",
+						"type": "string",
+						"minLength": 1
+					},
+
 					"url": 
 					{
 						"description": "Tracker URL for manually entering tickets.",
 						"type": "string",
 						"minLength": 1,
 						"format": "uri"
-					}
-				},
+					},
 
-				"required": [
-					"url"
-				]
+					"email": 
+					{
+						"description": "Email address, in case there is no tracker.",
+						"type": "string",
+						"minLength": 1
+					}
+				}
 			},
 
 			"minItems": 1
@@ -284,13 +302,30 @@
 
 		"dependencies": 
 		{
-			"description": "An array of strings with names & versions. The syntax is similar to the one used by NPM.",
+			"description": "An array of objects with names & versions.",
 			"uniqueItems": true,
 			"additionalItems": false,
 			"type": "array",
 			"items": 
 			{
-				"type": "string"
+				"type": "object",
+				"additionalProperties": false,
+				"properties": 
+				{
+					"name": 
+					{
+						"description": "A package name, as full path.",
+						"type": "string",
+						"minLength": 1
+					},
+
+					"version": 
+					{
+						"description": "An extended semver compliant version number. The syntax is similar to the one used by NPM.",
+						"type": "string",
+						"minLength": 1
+					}
+				}
 			},
 
 			"minItems": 0
@@ -300,7 +335,6 @@
 	"required": [
 		"$schema",
 		"name",
-		"parent",
 		"repository",
 		"releases",
 		"license",
